@@ -1,0 +1,402 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Treatment History</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f4f7fb;
+            color: #1e293b;
+        }
+
+        .page-container {
+            min-height: 100vh;
+            padding: 40px;
+        }
+
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .page-header h1 {
+            font-size: 28px;
+            margin-bottom: 7px;
+        }
+
+        .page-header p {
+            color: #64748b;
+            font-size: 14px;
+        }
+
+        .back-button {
+            text-decoration: none;
+            background: #2563eb;
+            color: white;
+            padding: 11px 18px;
+            border-radius: 9px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .back-button:hover {
+            background: #1d4ed8;
+        }
+
+        .history-card {
+            background: white;
+            padding: 28px;
+            border-radius: 18px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.06);
+        }
+
+        .history-title {
+            margin-bottom: 22px;
+        }
+
+        .history-title h2 {
+            font-size: 21px;
+            margin-bottom: 6px;
+        }
+
+        .history-title p {
+            color: #64748b;
+            font-size: 14px;
+        }
+
+        .table-wrapper {
+            overflow-x: auto;
+        }
+
+        .treatment-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .treatment-table thead {
+            background: #f8fafc;
+        }
+
+        .treatment-table th {
+            padding: 15px;
+            text-align: left;
+            font-size: 12px;
+            color: #64748b;
+            text-transform: uppercase;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .treatment-table td {
+            padding: 16px 15px;
+            font-size: 14px;
+            border-bottom: 1px solid #f1f5f9;
+        }
+
+        .treatment-table tbody tr:hover {
+            background: #f8fafc;
+        }
+
+        .status-active {
+            background: #dcfce7;
+            color: #166534;
+            padding: 6px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .status-completed {
+            background: #dbeafe;
+            color: #1d4ed8;
+            padding: 6px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .empty-message {
+            text-align: center;
+            padding: 50px 20px;
+            background: #f8fafc;
+            border: 1px dashed #cbd5e1;
+            border-radius: 12px;
+        }
+
+        .empty-message .icon {
+            font-size: 42px;
+            margin-bottom: 12px;
+        }
+
+        .empty-message h3 {
+            margin-bottom: 7px;
+        }
+
+        .empty-message p {
+            color: #64748b;
+            font-size: 14px;
+        }
+        .delete-button {
+    display: inline-block;
+    text-decoration: none;
+    background: #fee2e2;
+    color: #dc2626;
+    padding: 8px 12px;
+    border-radius: 7px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.delete-button:hover {
+    background: #dc2626;
+    color: white;
+}
+.edit-button {
+    display: inline-block;
+    text-decoration: none;
+    background: #eff6ff;
+    color: #2563eb;
+    padding: 8px 14px;
+    border-radius: 7px;
+    font-size: 12px;
+    font-weight: 600;
+    transition: 0.3s;
+}
+
+.edit-button:hover {
+    background: #2563eb;
+    color: white;
+}
+
+        @media (max-width: 700px) {
+
+            .page-container {
+                padding: 20px;
+            }
+
+            .page-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<div class="page-container">
+
+
+    <!-- HEADER -->
+
+    <div class="page-header">
+
+        <div>
+
+            <h1>
+                Treatment History
+            </h1>
+
+            <p>
+                View treatment records of your assigned patients
+            </p>
+
+        </div>
+
+
+        <a href="{% url 'doctor_dashboard' %}"
+           class="back-button">
+
+            ← Back to Dashboard
+
+        </a>
+
+    </div>
+
+
+
+    <!-- TREATMENT HISTORY -->
+
+    <div class="history-card">
+
+
+        <div class="history-title">
+
+            <h2>
+                Patient Treatment Records
+            </h2>
+
+            <p>
+                All treatments added by you are displayed below.
+            </p>
+
+        </div>
+
+
+        {% if treatments %}
+
+
+        <div class="table-wrapper">
+
+            <table class="treatment-table">
+
+                <thead>
+
+                    <tr>
+
+                        <th>
+                            Patient
+                        </th>
+
+                        <th>
+                            Treatment
+                        </th>
+
+                        <th>
+                            Description
+                        </th>
+
+                        <th>
+                            Treatment Date
+                        </th>
+
+                        <th>
+                            Status
+                        </th>
+                        <th>
+    Action
+</th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+
+                {% for treatment in treatments %}
+
+
+                    <tr>
+
+                        <td>
+                            {{ treatment.patient.name }}
+                        </td>
+
+                        <td>
+                            {{ treatment.treatment_name }}
+                        </td>
+
+                        <td>
+                            {{ treatment.description|default:"No description" }}
+                        </td>
+
+                        <td>
+                            {{ treatment.treatment_date|date:"d M Y" }}
+                        </td>
+
+                        <td>
+
+                            {% if treatment.status == "ACTIVE" %}
+
+                                <span class="status-active">
+                                    Active
+                                </span>
+
+                            {% else %}
+
+                                <span class="status-completed">
+                                    Completed
+                                </span>
+
+                            {% endif %}
+
+                        </td>
+                        <td>
+
+    <a href="{% url 'edit_treatment' treatment.id %}"
+   class="edit-button">
+
+    ✏️ Edit
+
+</a>
+<a href="{% url 'delete_treatment' treatment.id %}"
+       class="delete-button"
+       onclick="return confirm('Are you sure you want to delete this treatment?');">
+
+        🗑️ Delete
+
+    </a>
+
+</td>
+
+                    </tr>
+
+
+                {% endfor %}
+
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+
+        {% else %}
+
+
+        <div class="empty-message">
+
+            <div class="icon">
+                🩺
+            </div>
+
+            <h3>
+                No Treatment Records Found
+            </h3>
+
+            <p>
+                You have not added any treatment records yet.
+            </p>
+
+        </div>
+
+
+        {% endif %}
+
+
+    </div>
+
+
+</div>
+
+
+</body>
+
+</html>

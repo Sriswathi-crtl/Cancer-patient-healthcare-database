@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+```
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<title>My Appointments</title>
+
+<style>
+
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: Arial, sans-serif;
+    }
+
+    body {
+        background: #f4f7fb;
+        color: #333;
+    }
+
+    .container {
+        width: 90%;
+        max-width: 1100px;
+        margin: 40px auto;
+    }
+
+    .header {
+        background: #172554;
+        color: white;
+        padding: 25px;
+        border-radius: 12px;
+        margin-bottom: 25px;
+    }
+
+    .header h1 {
+        margin-bottom: 8px;
+    }
+
+    .appointment-form-card,
+    .appointments-card {
+        background: white;
+        padding: 30px;
+        border-radius: 15px;
+        box-shadow: 0 3px 15px rgba(0, 0, 0, 0.08);
+        margin-bottom: 25px;
+    }
+
+    .appointment-form-card h2,
+    .appointments-card h2 {
+        color: #172554;
+        margin-bottom: 20px;
+    }
+
+    .form-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+    }
+
+    .form-group {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .form-group.full {
+        grid-column: 1 / -1;
+    }
+
+    label {
+        font-weight: bold;
+        margin-bottom: 8px;
+        color: #334155;
+    }
+
+    input,
+    select,
+    textarea {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid #cbd5e1;
+        border-radius: 8px;
+        font-size: 15px;
+        background: white;
+    }
+
+    input:focus,
+    select:focus,
+    textarea:focus {
+        outline: none;
+        border-color: #2563eb;
+    }
+
+    .submit-btn {
+        margin-top: 20px;
+        padding: 12px 25px;
+        background: #2563eb;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-size: 15px;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+    .submit-btn:hover {
+        background: #1d4ed8;
+    }
+
+    .error-message {
+        background: #fee2e2;
+        color: #b91c1c;
+        padding: 12px;
+        border-radius: 8px;
+        margin-bottom: 20px;
+        font-weight: bold;
+    }
+
+    .success-message {
+        background: #dcfce7;
+        color: #15803d;
+        padding: 12px;
+        border-radius: 8px;
+        margin-bottom: 20px;
+        font-weight: bold;
+    }
+
+    .appointments-card {
+        overflow-x: auto;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        min-width: 850px;
+    }
+
+    th {
+        background: #172554;
+        color: white;
+        padding: 15px;
+        text-align: left;
+    }
+
+    td {
+        padding: 15px;
+        border-bottom: 1px solid #e5e7eb;
+    }
+
+    tr:hover {
+        background: #f8fafc;
+    }
+
+    .status {
+        padding: 7px 12px;
+        border-radius: 20px;
+        font-size: 13px;
+        font-weight: bold;
+    }
+
+    .scheduled {
+        background: #dcfce7;
+        color: #15803d;
+    }
+
+    .completed {
+        background: #dbeafe;
+        color: #1d4ed8;
+    }
+
+    .cancelled {
+        background: #fee2e2;
+        color: #dc2626;
+    }
+
+    .back-btn {
+        display: inline-block;
+        margin-top: 25px;
+        padding: 12px 20px;
+        background: #2563eb;
+        color: white;
+        text-decoration: none;
+        border-radius: 8px;
+    }
+
+    .back-btn:hover {
+        background: #1d4ed8;
+    }
+
+    @media (max-width: 700px) {
+
+        .form-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .form-group.full {
+            grid-column: auto;
+        }
+
+    }
+
+</style>
+```
+
+</head>
+
+<body>
+
+<div class="container">
+
+```
+<!-- HEADER -->
+
+<div class="header">
+
+    <h1>📅 My Appointments</h1>
+
+    <p>
+        Book and view your appointments
+    </p>
+
+</div>
+
+
+<!-- BOOK APPOINTMENT -->
+
+<div class="appointment-form-card">
+
+    <h2>
+        Book New Appointment
+    </h2>
+
+
+    <!-- ERROR MESSAGE -->
+
+    {% if error %}
+
+        <div class="error-message">
+            {{ error }}
+        </div>
+
+    {% endif %}
+
+
+    <!-- FORM ERRORS -->
+
+    {% if form.errors %}
+
+        <div class="error-message">
+
+            Please correct the following errors:
+
+            {{ form.errors }}
+
+        </div>
+
+    {% endif %}
+
+
+    <form method="POST">
+
+        {% csrf_token %}
+
+
+        <div class="form-grid">
+
+
+            <!-- DOCTOR -->
+
+            <div class="form-group">
+
+                <label>
+                    Doctor
+                </label>
+
+                {{ form.doctor }}
+
+            </div>
+
+
+            <!-- DATE -->
+
+            <div class="form-group">
+
+                <label>
+                    Appointment Date
+                </label>
+
+                {{ form.appointment_date }}
+
+            </div>
+
+
+            <!-- TIME -->
+
+            <div class="form-group">
+
+                <label>
+                    Appointment Time
+                </label>
+
+                {{ form.appointment_time }}
+
+            </div>
+
+
+            <!-- APPOINTMENT TYPE -->
+
+            <div class="form-group">
+
+                <label>
+                    Appointment Type
+                </label>
+
+                {{ form.appointment_type }}
+
+            </div>
+
+
+            <!-- REASON -->
+
+            <div class="form-group full">
+
+                <label>
+                    Reason for Appointment
+                </label>
+
+                {{ form.reason }}
+
+            </div>
+
+
+        </div>
+
+
+        <button type="submit"
+                class="submit-btn">
+
+            📅 Book Appointment
+
+        </button>
+
+
+    </form>
+
+</div>
+
+
+
+<!-- APPOINTMENT HISTORY -->
+
+<div class="appointments-card">
+
+    <h2>
+        Appointment History
+    </h2>
+
+
+    <table>
+
+        <thead>
+
+            <tr>
+
+                <th>
+                    Doctor
+                </th>
+
+                <th>
+                    Department
+                </th>
+
+                <th>
+                    Date
+                </th>
+
+                <th>
+                    Time
+                </th>
+
+                <th>
+                    Appointment Type
+                </th>
+
+                <th>
+                    Reason
+                </th>
+
+                <th>
+                    Status
+                </th>
+
+            </tr>
+
+        </thead>
+
+
+        <tbody>
+
+
+            {% for appointment in appointments %}
+
+            <tr>
+
+
+                <td>
+                    Dr. {{ appointment.doctor.name }}
+                </td>
+
+
+                <td>
+                    {{ appointment.doctor.department }}
+                </td>
+
+
+                <td>
+                    {{ appointment.appointment_date|date:"d F Y" }}
+                </td>
+
+
+                <td>
+                    {{ appointment.appointment_time|time:"h:i A" }}
+                </td>
+
+
+                <td>
+                    {{ appointment.get_appointment_type_display }}
+                </td>
+
+
+                <td>
+                    {{ appointment.reason|default:"-" }}
+                </td>
+
+
+                <td>
+
+
+                    {% if appointment.status == "SCHEDULED" %}
+
+                        <span class="status scheduled">
+                            Scheduled
+                        </span>
+
+
+                    {% elif appointment.status == "COMPLETED" %}
+
+                        <span class="status completed">
+                            Completed
+                        </span>
+
+
+                    {% elif appointment.status == "CANCELLED" %}
+
+                        <span class="status cancelled">
+                            Cancelled
+                        </span>
+
+
+                    {% else %}
+
+                        <span class="status">
+                            {{ appointment.status }}
+                        </span>
+
+                    {% endif %}
+
+
+                </td>
+
+
+            </tr>
+
+
+            {% empty %}
+
+
+            <tr>
+
+                <td colspan="7"
+                    style="text-align:center; padding:30px;">
+
+                    No appointments found.
+
+                </td>
+
+            </tr>
+
+
+            {% endfor %}
+
+
+        </tbody>
+
+
+    </table>
+
+
+    <a href="{% url 'patient_dashboard' %}"
+       class="back-btn">
+
+        ← Back to Dashboard
+
+    </a>
+
+
+</div>
+```
+
+</div>
+
+</body>
+
+</html>

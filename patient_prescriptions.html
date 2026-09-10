@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+```
+<title>My Prescriptions</title>
+
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: Arial, sans-serif;
+    }
+
+    body {
+        background: #f4f7fb;
+        color: #333;
+    }
+
+    .container {
+        width: 90%;
+        max-width: 1100px;
+        margin: 40px auto;
+    }
+
+    .header {
+        background: #172554;
+        color: white;
+        padding: 25px;
+        border-radius: 12px;
+        margin-bottom: 25px;
+    }
+
+    .header h1 {
+        margin-bottom: 8px;
+    }
+
+    .prescription-card {
+        background: white;
+        padding: 25px;
+        border-radius: 15px;
+        box-shadow: 0 3px 15px rgba(0, 0, 0, 0.08);
+        overflow-x: auto;
+    }
+
+    .prescription-card h2 {
+        color: #172554;
+        margin-bottom: 20px;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        min-width: 900px;
+    }
+
+    th {
+        background: #172554;
+        color: white;
+        padding: 15px;
+        text-align: left;
+    }
+
+    td {
+        padding: 15px;
+        border-bottom: 1px solid #e5e7eb;
+    }
+
+    tr:hover {
+        background: #f8fafc;
+    }
+
+    .medicine {
+        color: #2563eb;
+        font-weight: bold;
+    }
+
+    .status {
+        padding: 7px 12px;
+        border-radius: 20px;
+        font-size: 13px;
+        font-weight: bold;
+    }
+
+    .active {
+        background: #dcfce7;
+        color: #15803d;
+    }
+
+    .completed {
+        background: #dbeafe;
+        color: #1d4ed8;
+    }
+
+    .back-btn {
+        display: inline-block;
+        margin-top: 25px;
+        padding: 12px 20px;
+        background: #2563eb;
+        color: white;
+        text-decoration: none;
+        border-radius: 8px;
+    }
+
+    .back-btn:hover {
+        background: #1d4ed8;
+    }
+
+    @media (max-width: 700px) {
+        .container {
+            width: 95%;
+            margin: 20px auto;
+        }
+    }
+</style>
+```
+
+</head>
+
+<body>
+
+```
+<div class="container">
+
+    <div class="header">
+        <h1>💊 My Prescriptions</h1>
+        <p>View your prescribed medicines and dosage details</p>
+    </div>
+
+    <div class="prescription-card">
+
+        <h2>Prescription History</h2>
+
+        <table>
+
+            <thead>
+                <tr>
+                    <th>Medicine Name</th>
+                    <th>Dosage</th>
+                    <th>Frequency</th>
+                    <th>Start Date</th>
+                    <th>End Date</th>
+                    <th>Prescribed By</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                <tr>
+                    <td class="medicine">Paracetamol</td>
+                    <td>500 mg</td>
+                    <td>Twice a day</td>
+                    <td>20 July 2026</td>
+                    <td>27 July 2026</td>
+                    <td>Dr. Kumar</td>
+                    <td>
+                        <span class="status completed">
+                            Completed
+                        </span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="medicine">Ondansetron</td>
+                    <td>8 mg</td>
+                    <td>Once a day</td>
+                    <td>25 July 2026</td>
+                    <td>10 August 2026</td>
+                    <td>Dr. Kumar</td>
+                    <td>
+                        <span class="status active">
+                            Active
+                        </span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="medicine">Dexamethasone</td>
+                    <td>4 mg</td>
+                    <td>Once a day</td>
+                    <td>25 July 2026</td>
+                    <td>05 August 2026</td>
+                    <td>Dr. Kumar</td>
+                    <td>
+                        <span class="status active">
+                            Active
+                        </span>
+                    </td>
+                </tr>
+
+            </tbody>
+
+        </table>
+
+        <a href="{% url 'patient_dashboard' %}" class="back-btn">
+            ← Back to Dashboard
+        </a>
+
+    </div>
+
+</div>
+```
+
+</body>
+</html>

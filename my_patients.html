@@ -1,0 +1,439 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>My Patients</title>
+
+    <link rel="stylesheet"
+          href="{% static 'css/doctor_dash.css' %}">
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f7fb;
+            color: #1e293b;
+        }
+
+        .page-container {
+            margin-left: 40px;
+            padding: 35px 45px;
+            min-height: 100vh;
+        }
+
+        /* HEADER */
+
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .page-header h1 {
+            margin: 0 0 7px;
+            font-size: 28px;
+        }
+
+        .page-header p {
+            margin: 0;
+            color: #64748b;
+            font-size: 14px;
+        }
+
+        .back-btn {
+            text-decoration: none;
+            background: #2563eb;
+            color: white;
+            padding: 12px 20px;
+            border-radius: 9px;
+            font-size: 14px;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+
+        .back-btn:hover {
+            background: #1d4ed8;
+        }
+
+        /* PATIENT COUNT */
+
+        .patient-summary {
+            background: white;
+            padding: 22px 25px;
+            border-radius: 16px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.05);
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            gap: 18px;
+        }
+
+        .summary-icon {
+            width: 55px;
+            height: 55px;
+            border-radius: 13px;
+            background: #dbeafe;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 27px;
+        }
+
+        .patient-summary p {
+            margin: 0 0 5px;
+            color: #64748b;
+            font-size: 13px;
+        }
+
+        .patient-summary h2 {
+            margin: 0;
+            font-size: 25px;
+        }
+
+        /* PATIENT TABLE */
+
+        .patients-card {
+            background: white;
+            border-radius: 18px;
+            padding: 28px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.05);
+            overflow-x: auto;
+        }
+
+        .card-header {
+            margin-bottom: 22px;
+        }
+
+        .card-header h2 {
+            margin: 0 0 6px;
+            font-size: 21px;
+        }
+
+        .card-header p {
+            margin: 0;
+            color: #64748b;
+            font-size: 14px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            text-align: left;
+            padding: 15px;
+            background: #f8fafc;
+            color: #475569;
+            font-size: 13px;
+            font-weight: 600;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        td {
+            padding: 16px 15px;
+            border-bottom: 1px solid #f1f5f9;
+            font-size: 14px;
+            color: #334155;
+        }
+
+        tr:hover td {
+            background: #f8fafc;
+        }
+
+        .patient-name {
+            font-weight: 600;
+            color: #1e293b;
+        }
+
+        .patient-id {
+            display: inline-block;
+            background: #eff6ff;
+            color: #2563eb;
+            padding: 5px 10px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .view-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    text-decoration: none;
+    background: #2563eb;
+    color: white;
+    padding: 10px 16px;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: 600;
+    transition: 0.3s ease;
+    white-space: nowrap;
+}
+
+.view-btn:hover {
+    background: #1d4ed8;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 12px rgba(37, 99, 235, 0.25);
+}
+
+        /* EMPTY STATE */
+
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+        }
+
+        .empty-icon {
+            font-size: 50px;
+            margin-bottom: 15px;
+        }
+
+        .empty-state h3 {
+            margin: 0 0 8px;
+            font-size: 20px;
+        }
+
+        .empty-state p {
+            margin: 0;
+            color: #64748b;
+            font-size: 14px;
+        }
+
+        /* RESPONSIVE */
+
+        @media (max-width: 800px) {
+
+            .page-container {
+                margin-left: 0;
+                padding: 25px 20px;
+            }
+
+            .page-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 20px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<div class="page-container">
+
+
+    <!-- PAGE HEADER -->
+
+    <div class="page-header">
+
+        <div>
+
+            <h1>
+                My Patients
+            </h1>
+
+            <p>
+                View and manage patients assigned to you
+            </p>
+
+        </div>
+
+
+        <a href="{% url 'doctor_dashboard' %}"
+           class="back-btn">
+
+            ← Back to Dashboard
+
+        </a>
+
+    </div>
+
+
+
+    <!-- PATIENT SUMMARY -->
+
+    <div class="patient-summary">
+
+        <div class="summary-icon">
+            👥
+        </div>
+
+        <div>
+
+            <p>
+                Total Assigned Patients
+            </p>
+
+            <h2>
+                {{ assignments|length }}
+            </h2>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- PATIENT LIST -->
+
+    <div class="patients-card">
+
+
+        <div class="card-header">
+
+            <h2>
+                Assigned Patients
+            </h2>
+
+            <p>
+                Patients currently assigned to you
+            </p>
+
+        </div>
+
+
+        {% if assignments %}
+
+        <table>
+
+            <thead>
+
+                <tr>
+
+                    <th>
+                        ID
+                    </th>
+
+                    <th>
+                        Patient Name
+                    </th>
+
+                    <th>
+                        Email
+                    </th>
+
+                    <th>
+                        Phone
+                    </th>
+
+                    <th>
+                        Assigned Date
+                    </th>
+
+                    <th>
+                        Action
+                    </th>
+
+                </tr>
+
+            </thead>
+
+
+            <tbody>
+
+                {% for assignment in assignments %}
+
+                <tr>
+
+                    <td>
+
+                        <span class="patient-id">
+                            #{{ assignment.patient.id }}
+                        </span>
+
+                    </td>
+
+
+                    <td>
+
+                        <span class="patient-name">
+                            {{ assignment.patient.name }}
+                        </span>
+
+                    </td>
+
+
+                    <td>
+                        {{ assignment.patient.email }}
+                    </td>
+
+
+                    <td>
+                        {{ assignment.patient.phone }}
+                    </td>
+
+
+                    <td>
+                        {{ assignment.assigned_date|date:"d M Y" }}
+                    </td>
+
+
+                    <td>
+
+                        <a href="{% url 'view_patient_record' assignment.patient.id %}"
+   class="view-btn">
+    👁 View Record
+</a>
+
+                    </td>
+
+                </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+
+        {% else %}
+
+        <div class="empty-state">
+
+            <div class="empty-icon">
+                🧑‍⚕️
+            </div>
+
+            <h3>
+                No Patients Assigned
+            </h3>
+
+            <p>
+                You currently have no patients assigned to you.
+            </p>
+
+        </div>
+
+        {% endif %}
+
+
+    </div>
+
+
+</div>
+
+
+</body>
+
+</html>

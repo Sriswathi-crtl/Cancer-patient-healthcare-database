@@ -1,0 +1,497 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Create Doctor</title>
+
+    <link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+
+    <style>
+
+    * {
+        box-sizing: border-box;
+    }
+
+    body {
+        margin: 0;
+        min-height: 100vh;
+        font-family: "Segoe UI", Arial, sans-serif;
+        background: linear-gradient(
+            135deg,
+            #eef6ff 0%,
+            #f8fbff 50%,
+            #eefaff 100%
+        );
+        color: #1e293b;
+    }
+
+    .main-content {
+        width: 100%;
+        min-height: 100vh;
+        padding: 55px 30px;
+    }
+
+    .topbar {
+        max-width: 900px;
+        margin: 0 auto 28px;
+    }
+
+    .topbar h1 {
+        margin: 0;
+        font-size: 32px;
+        font-weight: 700;
+        color: #0f2a43;
+        letter-spacing: -0.5px;
+    }
+
+    .topbar p {
+        margin-top: 8px;
+        color: #64748b;
+        font-size: 15px;
+    }
+
+    .form-card {
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 38px 42px;
+        background: rgba(255, 255, 255, 0.96);
+        border: 1px solid #dbeafe;
+        border-radius: 22px;
+
+        box-shadow:
+            0 20px 45px rgba(15, 42, 67, 0.10),
+            0 4px 12px rgba(37, 99, 235, 0.05);
+    }
+
+    .form-header {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        padding-bottom: 25px;
+        margin-bottom: 28px;
+        border-bottom: 1px solid #e2e8f0;
+    }
+
+    .form-header::before {
+        content: "👨‍⚕️";
+        width: 52px;
+        height: 52px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        background: linear-gradient(
+            135deg,
+            #2563eb,
+            #06b6d4
+        );
+
+        border-radius: 14px;
+        font-size: 25px;
+        box-shadow: 0 8px 18px rgba(37, 99, 235, 0.20);
+    }
+
+    .form-header h2 {
+        margin: 0;
+        color: #0f2a43;
+        font-size: 22px;
+    }
+
+    .form-header p {
+        margin: 6px 0 0;
+        color: #64748b;
+        font-size: 14px;
+    }
+
+    .doctor-form {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 24px;
+    }
+
+    .form-group {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .form-group label {
+        margin-bottom: 8px;
+        color: #334155;
+        font-size: 13px;
+        font-weight: 600;
+    }
+
+    .form-group input {
+        width: 100%;
+        padding: 14px 16px;
+
+        background: #f8fafc;
+        border: 1px solid #cbd5e1;
+        border-radius: 11px;
+
+        color: #1e293b;
+        font-size: 14px;
+
+        outline: none;
+        transition: all 0.25s ease;
+    }
+
+    .form-group input:hover {
+        border-color: #93c5fd;
+        background: #ffffff;
+    }
+
+    .form-group input:focus {
+        background: #ffffff;
+        border-color: #2563eb;
+
+        box-shadow:
+            0 0 0 4px rgba(37, 99, 235, 0.10);
+
+        transform: translateY(-1px);
+    }
+
+    .error-message {
+        margin-top: 6px;
+        color: #dc2626;
+        font-size: 12px;
+    }
+
+    .form-actions {
+        grid-column: span 2;
+
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+
+        gap: 14px;
+        margin-top: 12px;
+        padding-top: 25px;
+
+        border-top: 1px solid #e2e8f0;
+    }
+
+    .btn-cancel {
+        text-decoration: none;
+
+        padding: 13px 25px;
+
+        border: 1px solid #cbd5e1;
+        border-radius: 10px;
+
+        background: #ffffff;
+        color: #475569;
+
+        font-size: 14px;
+        font-weight: 600;
+
+        transition: 0.25s;
+    }
+
+    .btn-cancel:hover {
+        background: #f1f5f9;
+        border-color: #94a3b8;
+    }
+
+    .btn-create {
+        border: none;
+
+        padding: 13px 28px;
+
+        border-radius: 10px;
+
+        background: linear-gradient(
+            135deg,
+            #2563eb,
+            #0891b2
+        );
+
+        color: #ffffff;
+
+        font-size: 14px;
+        font-weight: 600;
+
+        cursor: pointer;
+
+        box-shadow:
+            0 8px 18px rgba(37, 99, 235, 0.20);
+
+        transition: all 0.25s ease;
+    }
+
+    .btn-create:hover {
+        transform: translateY(-2px);
+
+        box-shadow:
+            0 12px 24px rgba(37, 99, 235, 0.28);
+    }
+
+    @media (max-width: 700px) {
+
+        .main-content {
+            padding: 30px 18px;
+        }
+
+        .form-card {
+            padding: 28px 22px;
+        }
+
+        .doctor-form {
+            grid-template-columns: 1fr;
+        }
+
+        .form-actions {
+            grid-column: span 1;
+            flex-direction: column-reverse;
+        }
+
+        .btn-cancel,
+        .btn-create {
+            width: 100%;
+            text-align: center;
+        }
+
+    }
+
+    </style>
+
+</head>
+
+<body>
+
+<main class="main-content">
+
+    <header class="topbar">
+
+        <h1>Create Doctor</h1>
+
+        <p>
+            Add a new doctor to the hospital management system
+        </p>
+
+    </header>
+
+
+    <div class="form-card">
+
+        <div class="form-header">
+
+            <div>
+                <h2>Doctor Information</h2>
+
+                <p>
+                    Enter the doctor's details and login credentials
+                </p>
+            </div>
+
+        </div>
+
+
+        <form method="POST" class="doctor-form" autocomplete="off">
+
+            {% csrf_token %}
+
+
+            <!-- Doctor Name -->
+
+            <div class="form-group">
+
+                <label>Doctor Name</label>
+
+                {{ form.name }}
+
+                {% if form.name.errors %}
+                    <div class="error-message">
+                        {{ form.name.errors }}
+                    </div>
+                {% endif %}
+
+            </div>
+
+
+            <!-- Email -->
+
+            <div class="form-group">
+
+                <label>Email Address</label>
+
+                {{ form.email }}
+
+                {% if form.email.errors %}
+                    <div class="error-message">
+                        {{ form.email.errors }}
+                    </div>
+                {% endif %}
+
+            </div>
+
+
+            <!-- Phone -->
+
+            <div class="form-group">
+
+                <label>Phone Number</label>
+
+                {{ form.phone }}
+
+                {% if form.phone.errors %}
+                    <div class="error-message">
+                        {{ form.phone.errors }}
+                    </div>
+                {% endif %}
+
+            </div>
+
+
+            <!-- Specialization -->
+
+            <div class="form-group">
+
+                <label>Specialization</label>
+
+                {{ form.specialization }}
+
+                {% if form.specialization.errors %}
+                    <div class="error-message">
+                        {{ form.specialization.errors }}
+                    </div>
+                {% endif %}
+
+            </div>
+
+
+            <!-- Department -->
+
+            <div class="form-group">
+
+                <label>Department</label>
+
+                {{ form.department }}
+
+                {% if form.department.errors %}
+                    <div class="error-message">
+                        {{ form.department.errors }}
+                    </div>
+                {% endif %}
+
+            </div>
+
+
+            <!-- Username -->
+
+            <div class="form-group">
+
+                <label>Username</label>
+
+                <input
+                    type="text"
+                    name="username"
+                    id="id_username"
+                    autocomplete="new-username"
+                    value=""
+                    required
+                >
+
+                {% if form.username.errors %}
+                    <div class="error-message">
+                        {{ form.username.errors }}
+                    </div>
+                {% endif %}
+
+            </div>
+
+
+            <!-- Password -->
+
+            <div class="form-group">
+
+                <label>Password</label>
+
+                <input
+                    type="password"
+                    name="password"
+                    id="id_password"
+                    autocomplete="new-password"
+                    value=""
+                    required
+                >
+
+                {% if form.password.errors %}
+                    <div class="error-message">
+                        {{ form.password.errors }}
+                    </div>
+                {% endif %}
+
+            </div>
+
+
+            <!-- Confirm Password -->
+
+            <div class="form-group">
+
+                <label>Confirm Password</label>
+
+                <input
+                    type="password"
+                    name="confirm_password"
+                    id="id_confirm_password"
+                    autocomplete="new-password"
+                    value=""
+                    required
+                >
+
+                {% if form.confirm_password.errors %}
+                    <div class="error-message">
+                        {{ form.confirm_password.errors }}
+                    </div>
+                {% endif %}
+
+            </div>
+
+
+            <!-- Form Errors -->
+
+            {% if form.non_field_errors %}
+
+                <div class="error-message">
+
+                    {{ form.non_field_errors }}
+
+                </div>
+
+            {% endif %}
+
+
+            <!-- Buttons -->
+
+            <div class="form-actions">
+
+                <a
+                    href="{% url 'admin_dashboard' %}"
+                    class="btn-cancel"
+                >
+                    Cancel
+                </a>
+
+                <button
+                    type="submit"
+                    class="btn-create"
+                >
+                    Create Doctor
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</main>
+
+</body>
+</html>

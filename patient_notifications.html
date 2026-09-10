@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+```
+<title>Notifications</title>
+
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: Arial, sans-serif;
+    }
+
+    body {
+        background: #f4f7fb;
+        color: #333;
+    }
+
+    .container {
+        width: 90%;
+        max-width: 900px;
+        margin: 40px auto;
+    }
+
+    .header {
+        background: #172554;
+        color: white;
+        padding: 25px;
+        border-radius: 12px;
+        margin-bottom: 25px;
+    }
+
+    .header h1 {
+        margin-bottom: 8px;
+    }
+
+    .notification-card {
+        background: white;
+        padding: 25px;
+        border-radius: 15px;
+        box-shadow: 0 3px 15px rgba(0, 0, 0, 0.08);
+    }
+
+    .notification-card h2 {
+        color: #172554;
+        margin-bottom: 20px;
+    }
+
+    .notification {
+        display: flex;
+        align-items: flex-start;
+        gap: 18px;
+        padding: 20px;
+        margin-bottom: 15px;
+        background: #f8fafc;
+        border-radius: 10px;
+        border-left: 4px solid #2563eb;
+    }
+
+    .notification-icon {
+        width: 45px;
+        height: 45px;
+        background: #dbeafe;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 22px;
+        flex-shrink: 0;
+    }
+
+    .notification-content {
+        flex: 1;
+    }
+
+    .notification-content h3 {
+        color: #172554;
+        margin-bottom: 6px;
+        font-size: 17px;
+    }
+
+    .notification-content p {
+        color: #64748b;
+        line-height: 1.5;
+        margin-bottom: 6px;
+    }
+
+    .notification-content small {
+        color: #94a3b8;
+    }
+
+    .unread {
+        background: #eff6ff;
+        border-left-color: #2563eb;
+    }
+
+    .read {
+        border-left-color: #94a3b8;
+    }
+
+    .back-btn {
+        display: inline-block;
+        margin-top: 15px;
+        padding: 12px 20px;
+        background: #2563eb;
+        color: white;
+        text-decoration: none;
+        border-radius: 8px;
+    }
+
+    .back-btn:hover {
+        background: #1d4ed8;
+    }
+
+    @media (max-width: 600px) {
+        .container {
+            width: 95%;
+            margin: 20px auto;
+        }
+
+        .notification {
+            gap: 12px;
+            padding: 15px;
+        }
+    }
+</style>
+```
+
+</head>
+
+<body>
+
+```
+<div class="container">
+
+    <div class="header">
+        <h1>🔔 Notifications</h1>
+        <p>Stay updated with your appointments, treatments and medical information</p>
+    </div>
+
+    <div class="notification-card">
+
+        <h2>Recent Notifications</h2>
+
+        <!-- Notification 1 -->
+        <div class="notification unread">
+
+            <div class="notification-icon">
+                📅
+            </div>
+
+            <div class="notification-content">
+
+                <h3>Appointment Confirmed</h3>
+
+                <p>
+                    Your appointment with Dr. Kumar has been confirmed
+                    for 05 August 2026 at 10:30 AM.
+                </p>
+
+                <small>
+                    Today
+                </small>
+
+            </div>
+
+        </div>
+
+
+        <!-- Notification 2 -->
+        <div class="notification unread">
+
+            <div class="notification-icon">
+                💊
+            </div>
+
+            <div class="notification-content">
+
+                <h3>Treatment Reminder</h3>
+
+                <p>
+                    Your next chemotherapy session is scheduled
+                    for 08 August 2026.
+                </p>
+
+                <small>
+                    Yesterday
+                </small>
+
+            </div>
+
+        </div>
+
+
+        <!-- Notification 3 -->
+        <div class="notification read">
+
+            <div class="notification-icon">
+                📋
+            </div>
+
+            <div class="notification-content">
+
+                <h3>New Medical Report Available</h3>
+
+                <p>
+                    Your latest CT Scan report has been uploaded.
+                    You can view it in your Medical Records.
+                </p>
+
+                <small>
+                    2 days ago
+                </small>
+
+            </div>
+
+        </div>
+
+
+        <!-- Notification 4 -->
+        <div class="notification read">
+
+            <div class="notification-icon">
+                💊
+            </div>
+
+            <div class="notification-content">
+
+                <h3>New Prescription Added</h3>
+
+                <p>
+                    Dr. Kumar has added a new prescription to your
+                    medical records.
+                </p>
+
+                <small>
+                    3 days ago
+                </small>
+
+            </div>
+
+        </div>
+
+
+        <!-- Notification 5 -->
+        <div class="notification read">
+
+            <div class="notification-icon">
+                👨‍⚕️
+            </div>
+
+            <div class="notification-content">
+
+                <h3>Doctor Information Updated</h3>
+
+                <p>
+                    Your assigned doctor information has been updated.
+                </p>
+
+                <small>
+                    5 days ago
+                </small>
+
+            </div>
+
+        </div>
+
+
+        <a href="{% url 'patient_dashboard' %}" class="back-btn">
+            ← Back to Dashboard
+        </a>
+
+    </div>
+
+</div>
+```
+
+</body>
+</html>

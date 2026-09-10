@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>My Doctor</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f4f7fb;
+            color: #333;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1000px;
+            margin: 40px auto;
+        }
+
+        .header {
+            background: #172554;
+            color: white;
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+        }
+
+        .header h1 {
+            margin-bottom: 8px;
+        }
+
+        .doctor-card {
+            background: white;
+            padding: 35px;
+            border-radius: 15px;
+            box-shadow: 0 3px 15px rgba(0, 0, 0, 0.08);
+            margin-bottom: 25px;
+        }
+
+        .doctor-top {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .doctor-icon {
+            width: 100px;
+            height: 100px;
+            background: #2563eb;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: auto;
+            font-size: 45px;
+        }
+
+        .doctor-top h2 {
+            margin-top: 15px;
+            color: #172554;
+        }
+
+        .doctor-top p {
+            color: #64748b;
+            margin-top: 5px;
+        }
+
+        .doctor-details {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .detail-box {
+            background: #f8fafc;
+            padding: 18px;
+            border-radius: 8px;
+            border-left: 4px solid #2563eb;
+        }
+
+        .detail-box h4 {
+            color: #64748b;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        .detail-box p {
+            font-size: 16px;
+            font-weight: bold;
+            color: #172554;
+        }
+
+        .status {
+            color: #16a34a !important;
+        }
+
+        .no-doctor {
+            text-align: center;
+            padding: 40px;
+            color: #64748b;
+        }
+
+        .no-doctor h2 {
+            color: #172554;
+            margin-bottom: 10px;
+        }
+
+        .back-btn {
+            display: inline-block;
+            margin-top: 5px;
+            padding: 12px 20px;
+            background: #2563eb;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+        }
+
+        .back-btn:hover {
+            background: #1d4ed8;
+        }
+
+        @media (max-width: 700px) {
+            .doctor-details {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="header">
+        <h1>My Doctor</h1>
+        <p>View your assigned doctor information</p>
+    </div>
+
+
+    {% if assignments %}
+
+        {% for assignment in assignments %}
+
+        <div class="doctor-card">
+
+            <div class="doctor-top">
+
+                <div class="doctor-icon">
+                    👨‍⚕️
+                </div>
+
+                <h2>Dr. {{ assignment.doctor.name }}</h2>
+
+                <p>{{ assignment.doctor.specialization }}</p>
+
+            </div>
+
+
+            <div class="doctor-details">
+
+                <div class="detail-box">
+                    <h4>Doctor Name</h4>
+                    <p>Dr. {{ assignment.doctor.name }}</p>
+                </div>
+
+
+                <div class="detail-box">
+                    <h4>Specialization</h4>
+                    <p>{{ assignment.doctor.specialization }}</p>
+                </div>
+
+
+                <div class="detail-box">
+                    <h4>Department</h4>
+                    <p>{{ assignment.doctor.department }}</p>
+                </div>
+
+
+                <div class="detail-box">
+                    <h4>Email</h4>
+                    <p>{{ assignment.doctor.email }}</p>
+                </div>
+
+
+                <div class="detail-box">
+                    <h4>Phone Number</h4>
+                    <p>{{ assignment.doctor.phone }}</p>
+                </div>
+
+
+                <div class="detail-box">
+                    <h4>Assigned Date</h4>
+                    <p>
+                        {{ assignment.assigned_date|date:"d F Y" }}
+                    </p>
+                </div>
+
+
+                <div class="detail-box">
+                    <h4>Availability Status</h4>
+                    <p class="status">● Assigned Doctor</p>
+                </div>
+
+
+                <div class="detail-box">
+                    <h4>Hospital</h4>
+                    <p>Cancer Care Hospital</p>
+                </div>
+
+            </div>
+
+        </div>
+
+        {% endfor %}
+
+
+    {% else %}
+
+        <div class="doctor-card">
+
+            <div class="no-doctor">
+
+                <h2>No Doctor Assigned</h2>
+
+                <p>
+                    You have not been assigned to a doctor yet.
+                    Please contact the hospital administration.
+                </p>
+
+            </div>
+
+        </div>
+
+    {% endif %}
+
+
+    <a href="{% url 'patient_dashboard' %}" class="back-btn">
+        ← Back to Dashboard
+    </a>
+
+</div>
+
+</body>
+</html>
+

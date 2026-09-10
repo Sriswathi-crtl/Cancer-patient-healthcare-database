@@ -1,0 +1,832 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Patient Assignments</title>
+
+
+    <style>
+
+        /* ================================
+           RESET
+        ================================= */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+
+        /* ================================
+           BODY
+        ================================= */
+
+        body {
+
+            min-height: 100vh;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #f1f5f9,
+                    #eaf2ff
+                );
+
+            color: #1e293b;
+
+            padding: 40px 20px;
+        }
+
+
+        /* ================================
+           CONTAINER
+        ================================= */
+
+        .page-container {
+
+            max-width: 1200px;
+
+            margin: auto;
+        }
+
+
+        /* ================================
+           TOP HEADER
+        ================================= */
+
+        .top-header {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            margin-bottom: 30px;
+        }
+
+
+        .page-title h1 {
+
+            font-size: 30px;
+
+            color: #0f172a;
+
+            margin-bottom: 7px;
+        }
+
+
+        .page-title p {
+
+            color: #64748b;
+
+            font-size: 14px;
+        }
+
+
+        /* ================================
+           HEADER BUTTON
+        ================================= */
+
+        .assign-new-btn {
+
+            text-decoration: none;
+
+            background: #2563eb;
+
+            color: white;
+
+            padding: 12px 20px;
+
+            border-radius: 9px;
+
+            font-size: 14px;
+
+            font-weight: 600;
+
+            transition: 0.3s;
+
+            box-shadow:
+                0 5px 12px
+                rgba(37, 99, 235, 0.18);
+        }
+
+
+        .assign-new-btn:hover {
+
+            background: #1d4ed8;
+
+            transform: translateY(-2px);
+        }
+
+
+        /* ================================
+           MAIN CARD
+        ================================= */
+
+        .table-card {
+
+            background: white;
+
+            border-radius: 18px;
+
+            padding: 28px;
+
+            box-shadow:
+                0 10px 35px
+                rgba(15, 23, 42, 0.08);
+
+            border: 1px solid #e2e8f0;
+
+            overflow-x: auto;
+        }
+
+
+        /* ================================
+           CARD HEADER
+        ================================= */
+
+        .table-card-header {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 15px;
+
+            margin-bottom: 25px;
+        }
+
+
+        .table-icon {
+
+            width: 52px;
+
+            height: 52px;
+
+            border-radius: 13px;
+
+            background: #ede9fe;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            font-size: 25px;
+        }
+
+
+        .table-card-header h2 {
+
+            font-size: 20px;
+
+            color: #1e293b;
+
+            margin-bottom: 5px;
+        }
+
+
+        .table-card-header p {
+
+            color: #64748b;
+
+            font-size: 13px;
+        }
+
+
+        /* ================================
+           TABLE
+        ================================= */
+
+        table {
+
+            width: 100%;
+
+            border-collapse: collapse;
+
+            min-width: 750px;
+        }
+
+
+        thead {
+
+            background: #f8fafc;
+        }
+
+
+        th {
+
+            padding: 15px;
+
+            text-align: left;
+
+            font-size: 12px;
+
+            text-transform: uppercase;
+
+            letter-spacing: 0.5px;
+
+            color: #64748b;
+
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+
+        td {
+
+            padding: 17px 15px;
+
+            font-size: 14px;
+
+            color: #334155;
+
+            border-bottom: 1px solid #f1f5f9;
+        }
+
+
+        tbody tr {
+
+            transition: 0.2s;
+        }
+
+
+        tbody tr:hover {
+
+            background: #f8fafc;
+        }
+
+
+        /* ================================
+           ID BADGE
+        ================================= */
+
+        .id-badge {
+
+            display: inline-flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            min-width: 35px;
+
+            padding: 6px 10px;
+
+            border-radius: 7px;
+
+            background: #f1f5f9;
+
+            color: #475569;
+
+            font-weight: 600;
+
+            font-size: 12px;
+        }
+
+
+        /* ================================
+           DOCTOR / PATIENT
+        ================================= */
+
+        .person-name {
+
+            font-weight: 600;
+
+            color: #1e293b;
+        }
+
+
+        /* ================================
+           DATE
+        ================================= */
+
+        .date-text {
+
+            color: #64748b;
+
+            font-size: 13px;
+        }
+
+
+        /* ================================
+           STATUS
+        ================================= */
+
+        .status-badge {
+
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 6px;
+
+            padding: 6px 11px;
+
+            border-radius: 20px;
+
+            background: #dcfce7;
+
+            color: #15803d;
+
+            font-size: 12px;
+
+            font-weight: 600;
+        }
+
+
+        .status-dot {
+
+            width: 6px;
+
+            height: 6px;
+
+            background: #22c55e;
+
+            border-radius: 50%;
+        }
+
+
+        /* ================================
+           REMOVE BUTTON
+        ================================= */
+
+        .remove-btn {
+
+            text-decoration: none;
+
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 6px;
+
+            padding: 8px 13px;
+
+            border-radius: 7px;
+
+            background: #fef2f2;
+
+            color: #dc2626;
+
+            font-size: 12px;
+
+            font-weight: 600;
+
+            transition: 0.3s;
+        }
+
+
+        .remove-btn:hover {
+
+            background: #fee2e2;
+
+            color: #b91c1c;
+        }
+
+
+        /* ================================
+           EMPTY STATE
+        ================================= */
+
+        .empty-state {
+
+            text-align: center;
+
+            padding: 60px 20px;
+        }
+
+
+        .empty-icon {
+
+            width: 70px;
+
+            height: 70px;
+
+            margin: 0 auto 18px;
+
+            border-radius: 18px;
+
+            background: #f1f5f9;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            font-size: 32px;
+        }
+
+
+        .empty-state h3 {
+
+            color: #334155;
+
+            font-size: 18px;
+
+            margin-bottom: 8px;
+        }
+
+
+        .empty-state p {
+
+            color: #64748b;
+
+            font-size: 14px;
+
+            margin-bottom: 20px;
+        }
+
+
+        /* ================================
+           BOTTOM NAVIGATION
+        ================================= */
+
+        .bottom-navigation {
+
+            margin-top: 25px;
+        }
+
+
+        .back-dashboard {
+
+            text-decoration: none;
+
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 8px;
+
+            padding: 10px 17px;
+
+            background: white;
+
+            color: #475569;
+
+            border: 1px solid #e2e8f0;
+
+            border-radius: 9px;
+
+            font-size: 14px;
+
+            font-weight: 600;
+
+            transition: 0.3s;
+        }
+
+
+        .back-dashboard:hover {
+
+            border-color: #2563eb;
+
+            color: #2563eb;
+        }
+
+
+        /* ================================
+           RESPONSIVE
+        ================================= */
+
+        @media (max-width: 700px) {
+
+            body {
+
+                padding: 25px 15px;
+            }
+
+
+            .top-header {
+
+                flex-direction: column;
+
+                align-items: flex-start;
+
+                gap: 20px;
+            }
+
+
+            .assign-new-btn {
+
+                width: 100%;
+
+                text-align: center;
+            }
+
+
+            .table-card {
+
+                padding: 20px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<div class="page-container">
+
+
+    <!-- =================================
+         PAGE HEADER
+    ================================= -->
+
+    <div class="top-header">
+
+
+        <div class="page-title">
+
+            <h1>
+                Patient Assignments
+            </h1>
+
+            <p>
+                Manage doctor and patient treatment assignments
+            </p>
+
+        </div>
+
+
+        <a href="{% url 'assign_patient' %}"
+           class="assign-new-btn">
+
+            + Assign New Patient
+
+        </a>
+
+
+    </div>
+
+
+
+    <!-- =================================
+         TABLE CARD
+    ================================= -->
+
+    <div class="table-card">
+
+
+        <!-- TABLE HEADER -->
+
+        <div class="table-card-header">
+
+            <div class="table-icon">
+                📋
+            </div>
+
+
+            <div>
+
+                <h2>
+                    Doctor-Patient Assignments
+                </h2>
+
+                <p>
+                    View and manage all assigned patients
+                </p>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- TABLE -->
+
+        <table>
+
+
+            <thead>
+
+                <tr>
+
+                    <th>
+                        ID
+                    </th>
+
+                    <th>
+                        Doctor
+                    </th>
+
+                    <th>
+                        Patient
+                    </th>
+
+                    <th>
+                        Assigned Date
+                    </th>
+
+                    <th>
+                        Status
+                    </th>
+
+                    <th>
+                        Action
+                    </th>
+
+                </tr>
+
+            </thead>
+
+
+            <tbody>
+
+
+                {% for assignment in assignments %}
+
+
+                <tr>
+
+
+                    <!-- ID -->
+
+                    <td>
+
+                        <span class="id-badge">
+
+                            #{{ assignment.id }}
+
+                        </span>
+
+                    </td>
+
+
+                    <!-- DOCTOR -->
+
+                    <td>
+
+                        <span class="person-name">
+
+                            👨‍⚕️
+                            {{ assignment.doctor.name }}
+
+                        </span>
+
+                    </td>
+
+
+                    <!-- PATIENT -->
+
+                    <td>
+
+                        <span class="person-name">
+
+                            🧑‍🤝‍🧑
+                            {{ assignment.patient.name }}
+
+                        </span>
+
+                    </td>
+
+
+                    <!-- DATE -->
+
+                    <td>
+
+                        <span class="date-text">
+
+                            {{ assignment.assigned_date }}
+
+                        </span>
+
+                    </td>
+
+
+                    <!-- STATUS -->
+
+                    <td>
+
+                        <span class="status-badge">
+
+                            <span class="status-dot"></span>
+
+                            Active
+
+                        </span>
+
+                    </td>
+
+
+                    <!-- ACTION -->
+
+                    <td>
+
+                        <a href="{% url 'delete_assignment' assignment.id %}"
+
+                           class="remove-btn"
+
+                           onclick="return confirm('Are you sure you want to remove this assignment?');">
+
+                            ✕ Remove
+
+                        </a>
+
+                    </td>
+
+
+                </tr>
+
+
+                {% empty %}
+
+
+                <!-- EMPTY STATE -->
+
+                <tr>
+
+                    <td colspan="6">
+
+
+                        <div class="empty-state">
+
+
+                            <div class="empty-icon">
+
+                                📋
+
+                            </div>
+
+
+                            <h3>
+
+                                No Patient Assignments
+
+                            </h3>
+
+
+                            <p>
+
+                                No doctor-patient assignments have been created yet.
+
+                            </p>
+
+
+                            <a href="{% url 'assign_patient' %}"
+
+                               class="assign-new-btn">
+
+                                + Assign Your First Patient
+
+                            </a>
+
+
+                        </div>
+
+
+                    </td>
+
+                </tr>
+
+
+                {% endfor %}
+
+
+            </tbody>
+
+
+        </table>
+
+
+    </div>
+
+
+
+    <!-- =================================
+         BACK TO DASHBOARD
+    ================================= -->
+
+    <div class="bottom-navigation">
+
+
+        <a href="{% url 'admin_dashboard' %}"
+           class="back-dashboard">
+
+            ← Back to Dashboard
+
+        </a>
+
+
+    </div>
+
+
+</div>
+
+
+</body>
+
+</html>

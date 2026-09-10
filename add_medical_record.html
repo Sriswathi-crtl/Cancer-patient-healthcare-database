@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Add Medical Record</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f4f7fb;
+            color: #333;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 750px;
+            margin: 50px auto;
+        }
+
+        .header {
+            background: #172554;
+            color: white;
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+        }
+
+        .header h1 {
+            margin-bottom: 8px;
+        }
+
+        .form-card {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 3px 15px rgba(0, 0, 0, 0.08);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            color: #334155;
+            margin-bottom: 8px;
+        }
+
+        input,
+        select,
+        textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            font-size: 15px;
+        }
+
+        input:focus,
+        select:focus,
+        textarea:focus {
+            outline: none;
+            border-color: #2563eb;
+        }
+
+        .submit-btn {
+            padding: 12px 25px;
+            background: #2563eb;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .submit-btn:hover {
+            background: #1d4ed8;
+        }
+
+        .back-btn {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 12px 20px;
+            background: #64748b;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+        }
+
+        .error {
+            background: #fee2e2;
+            color: #b91c1c;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<div class="container">
+
+
+    <div class="header">
+
+        <h1>📋 Add Medical Record</h1>
+
+        <p>
+            Add a medical record for your assigned patient
+        </p>
+
+    </div>
+
+
+    <div class="form-card">
+
+
+        {% if form.errors %}
+
+            <div class="error">
+
+                Please correct the errors below.
+
+                {{ form.errors }}
+
+            </div>
+
+        {% endif %}
+
+
+        <form method="POST">
+
+            {% csrf_token %}
+
+
+            <div class="form-group">
+
+                <label>
+                    Patient
+                </label>
+
+                {{ form.patient }}
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    Record Title
+                </label>
+
+                {{ form.record_title }}
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    Record Type
+                </label>
+
+                {{ form.record_type }}
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    Description
+                </label>
+
+                {{ form.description }}
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    Record Date
+                </label>
+
+                {{ form.record_date }}
+
+            </div>
+
+
+            <button type="submit"
+                    class="submit-btn">
+
+                ➕ Add Medical Record
+
+            </button>
+
+
+        </form>
+
+
+        <br>
+
+
+        <a href="{% url 'patient_records' %}"
+           class="back-btn">
+
+            ← Back to Patient Records
+
+        </a>
+
+
+    </div>
+
+
+</div>
+
+
+</body>
+
+</html>

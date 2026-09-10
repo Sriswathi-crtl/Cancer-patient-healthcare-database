@@ -1,0 +1,376 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #f4f7fb;
+    min-height: 100vh;
+}
+
+
+/* MAIN PAGE */
+
+.login-page {
+    min-height: 100vh;
+    display: flex;
+}
+
+
+/* LEFT SECTION */
+
+.left-section {
+    width: 54%;
+    min-height: 100vh;
+
+    background: linear-gradient(
+        180deg,
+        #118d84,
+        #087d77,
+        #12384a
+    );
+
+    position: relative;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    overflow: hidden;
+}
+
+
+/* BRAND */
+
+.brand {
+    position: absolute;
+    top: 48px;
+    left: 50px;
+
+    color: rgb(244, 240, 240);
+
+    font-size: 25px;
+    font-weight: bold;
+
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.brand-icon {
+    font-size: 35px;
+}
+
+
+/* IMAGE */
+
+.doctor-image {
+    width: 70%;
+    max-width: 600px;
+
+    margin-top: 160px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.doctor-image img {
+    width: 100%;
+    max-width: 600px;
+
+    height: 150%;
+
+    object-fit: contain;
+}
+
+
+/* FOOTER */
+
+.footer-text {
+    position: absolute;
+
+    bottom: 48px;
+
+    color: rgba(255, 255, 255, 0.65);
+
+    font-size: 13px;
+
+    text-align: center;
+}
+
+
+/* RIGHT SECTION */
+
+.right-section {
+    width: 46%;
+    min-height: 100vh;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background: #f5f7fa;
+}
+
+
+/* LOGIN CARD */
+
+.login-card {
+    width: 450px;
+
+    background:white;
+
+    padding: 42px 38px;
+
+    border-radius: 20px;
+
+    box-shadow:
+        0 10px 35px rgba(85, 19, 228, 0.08);
+}
+
+
+/* USER ICON */
+
+.user-icon {
+    width: 55px;
+    height: 55px;
+
+    margin: 0 auto 15px;
+
+    border-radius: 50%;
+
+    background: #e4f7f5;
+
+    color: #07867e;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    font-size: 27px;
+}
+
+
+/* HEADING */
+
+.login-card h1 {
+    text-align: center;
+
+    color: #172033;
+
+    font-size: 25px;
+
+    margin-bottom: 6px;
+}
+
+
+/* SUBTITLE */
+
+.subtitle {
+    text-align: center;
+
+    color: #8190a5;
+
+    font-size: 14px;
+
+    line-height: 20px;
+
+    margin-bottom: 30px;
+}
+
+
+/* ERROR */
+
+.error-message {
+    background: #ffe5e5;
+
+    color: #d00000;
+
+    padding: 10px;
+
+    border-radius: 7px;
+
+    margin-bottom: 18px;
+
+    text-align: center;
+
+    font-size: 14px;
+}
+
+
+/* FORM */
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+
+    color: #0e0e0e;
+
+    font-size: 14px;
+
+    margin-bottom: 8px;
+}
+
+
+/* INPUT */
+
+.input-box {
+    width: 100%;
+
+    height: 46px;
+
+    border: 1px solid #09e2c9;
+
+    border-radius: 9px;
+
+    display: flex;
+
+    align-items: center;
+
+    padding: 0 13px;
+
+    transition: 0.3s;
+}
+
+.input-box span {
+    color: #0c57bf;
+
+    margin-right: 10px;
+
+    font-size: 16px;
+}
+
+.input-box input {
+    width: 100%;
+
+    border: none;
+
+    outline: none;
+
+    font-size: 14px;
+
+    color: #333;
+}
+
+.input-box:focus-within {
+    border-color: #07867e;
+
+    box-shadow: 0 0 0 3px rgba(7, 134, 126, 0.1);
+}
+
+
+/* LOGIN OPTIONS */
+
+.login-options {
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    margin-bottom: 25px;
+
+    font-size: 13px;
+}
+
+.remember {
+    color: #555;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 5px;
+}
+
+.login-options a {
+    color: #07867e;
+
+    text-decoration: none;
+
+    font-weight: 500;
+}
+
+
+/* LOGIN BUTTON */
+
+.login-btn {
+    width: 100%;
+
+    height: 45px;
+
+    border: none;
+
+    border-radius: 8px;
+
+    background: #07867e;
+
+    color: white;
+
+    font-size: 15px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition: 0.3s;
+}
+
+.login-btn:hover {
+    background: #056c65;
+
+    transform: translateY(-1px);
+}
+
+
+/* SECURITY TEXT */
+
+.security-text {
+    text-align: center;
+
+    color: #91a0b5;
+
+    font-size: 12px;
+
+    margin-top: 25px;
+}
+
+
+/* RESPONSIVE */
+
+@media (max-width: 900px) {
+
+    .login-page {
+        flex-direction: column;
+    }
+
+    .left-section {
+        width: 100%;
+        min-height: 350px;
+    }
+
+    .right-section {
+        width: 100%;
+        padding: 40px 20px;
+    }
+
+    .brand {
+        top: 25px;
+        left: 30px;
+    }
+
+    .doctor-image {
+        margin-top: 100px;
+        width: 60%;
+    }
+
+    .footer-text {
+        display: none;
+    }
+}

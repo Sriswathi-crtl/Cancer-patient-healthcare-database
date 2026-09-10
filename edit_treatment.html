@@ -1,0 +1,415 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Edit Treatment</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f4f7fb;
+            color: #1e293b;
+        }
+
+        .page-container {
+            min-height: 100vh;
+            padding: 40px;
+        }
+
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .page-header h1 {
+            font-size: 28px;
+            margin-bottom: 7px;
+        }
+
+        .page-header p {
+            color: #64748b;
+            font-size: 14px;
+        }
+
+        .back-button {
+            text-decoration: none;
+            background: #2563eb;
+            color: white;
+            padding: 11px 18px;
+            border-radius: 9px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .back-button:hover {
+            background: #1d4ed8;
+        }
+
+        .form-card {
+            max-width: 850px;
+            margin: auto;
+            background: white;
+            padding: 35px;
+            border-radius: 18px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.06);
+        }
+
+        .form-title {
+            margin-bottom: 25px;
+        }
+
+        .form-title h2 {
+            font-size: 22px;
+            margin-bottom: 7px;
+        }
+
+        .form-title p {
+            color: #64748b;
+            font-size: 14px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group.full-width {
+            grid-column: span 2;
+        }
+
+        .form-group label {
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #334155;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px 14px;
+            border: 1px solid #cbd5e1;
+            border-radius: 9px;
+            font-size: 14px;
+            outline: none;
+            background: white;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            border-color: #2563eb;
+            box-shadow: 0 0 0 3px rgba(37,99,235,0.1);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+        }
+
+        .button-container {
+            display: flex;
+            justify-content: flex-end;
+            gap: 12px;
+            margin-top: 28px;
+        }
+
+        .cancel-button {
+            text-decoration: none;
+            background: #e2e8f0;
+            color: #334155;
+            padding: 12px 22px;
+            border-radius: 9px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .cancel-button:hover {
+            background: #cbd5e1;
+        }
+
+        .save-button {
+            border: none;
+            background: #2563eb;
+            color: white;
+            padding: 12px 25px;
+            border-radius: 9px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .save-button:hover {
+            background: #1d4ed8;
+        }
+
+        @media (max-width: 700px) {
+
+            .page-container {
+                padding: 20px;
+            }
+
+            .page-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+
+            .form-card {
+                padding: 25px;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .form-group.full-width {
+                grid-column: span 1;
+            }
+
+            .button-container {
+                flex-direction: column;
+            }
+
+            .cancel-button,
+            .save-button {
+                text-align: center;
+                width: 100%;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<div class="page-container">
+
+
+    <!-- HEADER -->
+
+    <div class="page-header">
+
+        <div>
+
+            <h1>
+                Edit Treatment
+            </h1>
+
+            <p>
+                Update treatment information for your patient
+            </p>
+
+        </div>
+
+
+        <a href="{% url 'treatment_history' %}"
+           class="back-button">
+
+            ← Back to Treatment History
+
+        </a>
+
+    </div>
+
+
+
+    <!-- FORM -->
+
+    <div class="form-card">
+
+
+        <div class="form-title">
+
+            <h2>
+                Update Treatment Information
+            </h2>
+
+            <p>
+                Modify the treatment details below
+            </p>
+
+        </div>
+
+
+        <form method="POST">
+
+            {% csrf_token %}
+
+
+            <div class="form-grid">
+
+
+                <!-- PATIENT -->
+
+                <div class="form-group">
+
+                    <label>
+                        Patient
+                    </label>
+
+                    <select name="patient" required>
+
+                        <option value="{{ treatment.patient.id }}">
+
+                            {{ treatment.patient.name }}
+
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+
+                <!-- TREATMENT NAME -->
+
+                <div class="form-group">
+
+                    <label>
+                        Treatment Name
+                    </label>
+
+                    <input
+                        type="text"
+                        name="treatment_name"
+                        value="{{ treatment.treatment_name }}"
+                        required
+                    >
+
+                </div>
+
+
+
+                <!-- TREATMENT DATE -->
+
+                <div class="form-group">
+
+                    <label>
+                        Treatment Date
+                    </label>
+
+                    <input
+                        type="date"
+                        name="treatment_date"
+                        value="{{ treatment.treatment_date|date:'Y-m-d' }}"
+                        required
+                    >
+
+                </div>
+
+
+
+                <!-- STATUS -->
+
+                <div class="form-group">
+
+                    <label>
+                        Treatment Status
+                    </label>
+
+                    <select name="status">
+
+                        <option value="ACTIVE"
+                            {% if treatment.status == "ACTIVE" %}
+                                selected
+                            {% endif %}>
+                            Active
+                        </option>
+
+                        <option value="COMPLETED"
+                            {% if treatment.status == "COMPLETED" %}
+                                selected
+                            {% endif %}>
+                            Completed
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+
+                <!-- DESCRIPTION -->
+
+                <div class="form-group full-width">
+
+                    <label>
+                        Treatment Description
+                    </label>
+
+                    <textarea
+                        name="description"
+                        rows="5"
+                    >{{ treatment.description }}</textarea>
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- BUTTONS -->
+
+            <div class="button-container">
+
+
+                <a href="{% url 'treatment_history' %}"
+                   class="cancel-button">
+
+                    Cancel
+
+                </a>
+
+
+                <button type="submit"
+                        class="save-button">
+
+                    💾 Update Treatment
+
+                </button>
+
+
+            </div>
+
+
+        </form>
+
+
+    </div>
+
+
+</div>
+
+
+</body>
+
+</html>

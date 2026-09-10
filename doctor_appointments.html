@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+```
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<title>Doctor Appointments</title>
+
+<style>
+
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: Arial, sans-serif;
+    }
+
+    body {
+        background: #f4f7fb;
+        color: #333;
+    }
+
+    .container {
+        width: 90%;
+        max-width: 1200px;
+        margin: 40px auto;
+    }
+
+    .header {
+        background: #172554;
+        color: white;
+        padding: 25px;
+        border-radius: 12px;
+        margin-bottom: 25px;
+    }
+
+    .header h1 {
+        margin-bottom: 8px;
+    }
+
+    .appointments-card {
+        background: white;
+        padding: 25px;
+        border-radius: 15px;
+        box-shadow: 0 3px 15px rgba(0, 0, 0, 0.08);
+        overflow-x: auto;
+    }
+
+    .appointments-card h2 {
+        color: #172554;
+        margin-bottom: 20px;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        min-width: 1000px;
+    }
+
+    th {
+        background: #172554;
+        color: white;
+        padding: 15px;
+        text-align: left;
+    }
+
+    td {
+        padding: 15px;
+        border-bottom: 1px solid #e5e7eb;
+    }
+
+    tr:hover {
+        background: #f8fafc;
+    }
+
+    .status {
+        padding: 7px 12px;
+        border-radius: 20px;
+        font-size: 13px;
+        font-weight: bold;
+    }
+
+    .scheduled {
+        background: #fef3c7;
+        color: #b45309;
+    }
+
+    .completed {
+        background: #dcfce7;
+        color: #15803d;
+    }
+
+    .cancelled {
+        background: #fee2e2;
+        color: #dc2626;
+    }
+
+    .no-data {
+        text-align: center;
+        padding: 30px;
+        color: #64748b;
+    }
+
+    .back-btn {
+        display: inline-block;
+        margin-top: 25px;
+        padding: 12px 20px;
+        background: #2563eb;
+        color: white;
+        text-decoration: none;
+        border-radius: 8px;
+    }
+
+    .back-btn:hover {
+        background: #1d4ed8;
+    }
+
+    @media (max-width: 700px) {
+
+        .container {
+            width: 95%;
+        }
+
+    }
+
+</style>
+```
+
+</head>
+
+<body>
+
+<div class="container">
+
+```
+<!-- HEADER -->
+
+<div class="header">
+
+    <h1>📅 My Appointments</h1>
+
+    <p>
+        View appointments scheduled for your patients
+    </p>
+
+</div>
+
+
+<!-- APPOINTMENTS CARD -->
+
+<div class="appointments-card">
+
+    <h2>Appointment List</h2>
+
+
+    {% if appointments %}
+
+
+    <table>
+
+
+        <thead>
+
+            <tr>
+
+                <th>
+                    Patient Name
+                </th>
+
+                <th>
+                    Patient Email
+                </th>
+
+                <th>
+                    Phone
+                </th>
+
+                <th>
+                    Date
+                </th>
+
+                <th>
+                    Time
+                </th>
+
+                <th>
+                    Reason
+                </th>
+
+                <!-- NEW -->
+
+                <th>
+                    Appointment Type
+                </th>
+
+                <th>
+                    Status
+                </th>
+
+            </tr>
+
+        </thead>
+
+
+        <tbody>
+
+
+            {% for appointment in appointments %}
+
+
+            <tr>
+
+
+                <!-- PATIENT NAME -->
+
+                <td>
+                    {{ appointment.patient.name }}
+                </td>
+
+
+                <!-- PATIENT EMAIL -->
+
+                <td>
+                    {{ appointment.patient.email }}
+                </td>
+
+
+                <!-- PATIENT PHONE -->
+
+                <td>
+                    {{ appointment.patient.phone }}
+                </td>
+
+
+                <!-- APPOINTMENT DATE -->
+
+                <td>
+                    {{ appointment.appointment_date|date:"d F Y" }}
+                </td>
+
+
+                <!-- APPOINTMENT TIME -->
+
+                <td>
+                    {{ appointment.appointment_time|time:"h:i A" }}
+                </td>
+
+
+                <!-- REASON -->
+
+                <td>
+
+                    {% if appointment.reason %}
+
+                        {{ appointment.reason }}
+
+                    {% else %}
+
+                        Not specified
+
+                    {% endif %}
+
+                </td>
+
+
+                <!-- APPOINTMENT TYPE -->
+
+                <td>
+
+                    {% if appointment.appointment_type %}
+
+                        {{ appointment.appointment_type }}
+
+                    {% else %}
+
+                        Not specified
+
+                    {% endif %}
+
+                </td>
+
+
+                <!-- STATUS -->
+
+                <td>
+
+
+                    {% if appointment.status == "SCHEDULED" %}
+
+
+                        <span class="status scheduled">
+
+                            Scheduled
+
+                        </span>
+
+
+                    {% elif appointment.status == "COMPLETED" %}
+
+
+                        <span class="status completed">
+
+                            Completed
+
+                        </span>
+
+
+                    {% elif appointment.status == "CANCELLED" %}
+
+
+                        <span class="status cancelled">
+
+                            Cancelled
+
+                        </span>
+
+
+                    {% endif %}
+
+
+                </td>
+
+
+            </tr>
+
+
+            {% endfor %}
+
+
+        </tbody>
+
+
+    </table>
+
+
+    {% else %}
+
+
+    <div class="no-data">
+
+        <h3>
+            No Appointments Found
+        </h3>
+
+        <p>
+            No patients have booked an appointment with you yet.
+        </p>
+
+    </div>
+
+
+    {% endif %}
+
+
+    <!-- BACK BUTTON -->
+
+    <a href="{% url 'doctor_dashboard' %}"
+       class="back-btn">
+
+        ← Back to Dashboard
+
+    </a>
+
+
+</div>
+```
+
+</div>
+
+</body>
+
+</html>

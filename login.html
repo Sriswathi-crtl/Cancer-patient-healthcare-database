@@ -1,0 +1,132 @@
+{% load static %}
+
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+```
+<title>Doctor Login</title>
+
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+```
+
+</head>
+
+<body>
+
+```
+<div class="login-page">
+
+    <!-- LEFT SIDE -->
+    <div class="left-section">
+
+        <div class="brand">
+            <span class="brand-icon">✚</span>
+            <span>HOSPITAL</span>
+        </div>
+
+        <div class="doctor-image">
+            <img
+                src="{% static 'image/image.png' %}"
+                alt="Doctor Illustration"
+            >
+        </div>
+
+    </div>
+
+
+    <!-- RIGHT SIDE -->
+    <div class="right-section">
+
+        <div class="login-card">
+
+            <div class="user-icon">
+                ♙
+            </div>
+
+            <h1>Login</h1>
+
+            <p class="subtitle">
+                Enter your credentials to access your dashboard
+            </p>
+
+            {% if error %}
+                <div class="error-message">
+                    {{ error }}
+                </div>
+            {% endif %}
+
+
+            <!-- LOGIN FORM -->
+
+            <form method="POST" autocomplete="off">
+
+                {% csrf_token %}
+
+                <div class="form-group">
+
+                    <label>Username</label>
+
+                    <div class="input-box">
+
+                        <span>♙</span>
+
+                        <input
+                            type="text"
+                            name="username"
+                            placeholder="Enter your username"
+                            autocomplete="off"
+                            value=""
+                            required
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>Password</label>
+
+                    <div class="input-box">
+
+                        <span>🔒</span>
+
+                        <input
+                            type="password"
+                            name="password"
+                            placeholder="Enter your password"
+                            autocomplete="new-password"
+                            value=""
+                            required
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <button type="submit" class="login-btn">
+                    Login to Dashboard
+                </button>
+
+            </form>
+
+
+            <div class="security-text">
+                🔒 Monitored — Authorized Medical Staff Only
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+```
+
+</body>
+</html>

@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>My Treatment</title>
+
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+
+        body {
+            background: #f4f7fb;
+            color: #333;
+        }
+
+
+        .container {
+            width: 90%;
+            max-width: 1100px;
+            margin: 40px auto;
+        }
+
+
+        .header {
+            background: #172554;
+            color: white;
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+        }
+
+
+        .header h1 {
+            margin-bottom: 8px;
+        }
+
+
+        .treatment-card {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 3px 15px rgba(0, 0, 0, 0.08);
+            margin-bottom: 25px;
+        }
+
+
+        .treatment-top {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+
+        .treatment-icon {
+            width: 100px;
+            height: 100px;
+            background: #2563eb;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: auto;
+            font-size: 45px;
+        }
+
+
+        .treatment-top h2 {
+            margin-top: 15px;
+            color: #172554;
+        }
+
+
+        .treatment-top p {
+            color: #64748b;
+            margin-top: 6px;
+        }
+
+
+        .treatment-list {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+
+        .treatment-item {
+            background: #f8fafc;
+            padding: 25px;
+            border-radius: 12px;
+            border-left: 5px solid #2563eb;
+        }
+
+
+        .treatment-title {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+
+        .treatment-title h3 {
+            color: #172554;
+            font-size: 20px;
+        }
+
+
+        .status {
+            padding: 7px 14px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+
+        .active {
+            background: #dcfce7;
+            color: #15803d;
+        }
+
+
+        .completed {
+            background: #dbeafe;
+            color: #1d4ed8;
+        }
+
+
+        .detail-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+
+        .detail-box {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+        }
+
+
+        .detail-box h4 {
+            color: #64748b;
+            margin-bottom: 7px;
+            font-size: 13px;
+        }
+
+
+        .detail-box p {
+            font-size: 16px;
+            font-weight: bold;
+            color: #172554;
+        }
+
+
+        .description {
+            margin-top: 15px;
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+        }
+
+
+        .description h4 {
+            color: #64748b;
+            margin-bottom: 7px;
+            font-size: 13px;
+        }
+
+
+        .description p {
+            color: #334155;
+            line-height: 1.6;
+        }
+
+
+        .no-data {
+            text-align: center;
+            padding: 40px;
+            background: #f8fafc;
+            border-radius: 10px;
+        }
+
+
+        .no-data h3 {
+            color: #172554;
+            margin-bottom: 10px;
+        }
+
+
+        .no-data p {
+            color: #64748b;
+        }
+
+
+        .back-btn {
+            display: inline-block;
+            margin-top: 30px;
+            padding: 12px 20px;
+            background: #2563eb;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+        }
+
+
+        .back-btn:hover {
+            background: #1d4ed8;
+        }
+
+
+        @media (max-width: 700px) {
+
+            .detail-grid {
+                grid-template-columns: 1fr;
+            }
+
+
+            .treatment-title {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<div class="container">
+
+
+    <!-- HEADER -->
+
+    <div class="header">
+
+        <h1>💊 My Treatment</h1>
+
+        <p>
+            View your current and previous treatment information
+        </p>
+
+    </div>
+
+
+
+    <!-- TREATMENT CARD -->
+
+    <div class="treatment-card">
+
+
+        <div class="treatment-top">
+
+            <div class="treatment-icon">
+                💊
+            </div>
+
+            <h2>
+                My Treatment Plan
+            </h2>
+
+            <p>
+                Treatment details provided by your doctor
+            </p>
+
+        </div>
+
+
+
+        <!-- TREATMENT LIST -->
+
+        {% if treatments %}
+
+
+        <div class="treatment-list">
+
+
+            {% for treatment in treatments %}
+
+
+            <div class="treatment-item">
+
+
+                <!-- TITLE -->
+
+                <div class="treatment-title">
+
+                    <h3>
+                        💊 {{ treatment.treatment_name }}
+                    </h3>
+
+
+                    {% if treatment.status == "ACTIVE" %}
+
+                        <span class="status active">
+                            ● Active
+                        </span>
+
+                    {% elif treatment.status == "COMPLETED" %}
+
+                        <span class="status completed">
+                            ✓ Completed
+                        </span>
+
+                    {% endif %}
+
+                </div>
+
+
+
+                <!-- DETAILS -->
+
+                <div class="detail-grid">
+
+
+                    <!-- DOCTOR -->
+
+                    <div class="detail-box">
+
+                        <h4>
+                            Treating Doctor
+                        </h4>
+
+                        <p>
+                            Dr. {{ treatment.doctor.name }}
+                        </p>
+
+                    </div>
+
+
+
+                    <!-- DEPARTMENT -->
+
+                    <div class="detail-box">
+
+                        <h4>
+                            Department
+                        </h4>
+
+                        <p>
+                            {{ treatment.doctor.department }}
+                        </p>
+
+                    </div>
+
+
+
+                    <!-- SPECIALIZATION -->
+
+                    <div class="detail-box">
+
+                        <h4>
+                            Specialization
+                        </h4>
+
+                        <p>
+                            {{ treatment.doctor.specialization }}
+                        </p>
+
+                    </div>
+
+
+
+                    <!-- TREATMENT DATE -->
+
+                    <div class="detail-box">
+
+                        <h4>
+                            Treatment Date
+                        </h4>
+
+                        <p>
+                            {{ treatment.treatment_date|date:"d F Y" }}
+                        </p>
+
+                    </div>
+
+
+                </div>
+
+
+
+                <!-- DESCRIPTION -->
+
+                <div class="description">
+
+                    <h4>
+                        Treatment Description
+                    </h4>
+
+                    <p>
+
+                        {% if treatment.description %}
+
+                            {{ treatment.description }}
+
+                        {% else %}
+
+                            No treatment description provided.
+
+                        {% endif %}
+
+                    </p>
+
+                </div>
+
+
+            </div>
+
+
+            {% endfor %}
+
+
+        </div>
+
+
+        {% else %}
+
+
+        <!-- NO TREATMENT -->
+
+        <div class="no-data">
+
+            <h3>
+                💊 No Treatment Records Found
+            </h3>
+
+            <p>
+                Your doctor has not added any treatment information yet.
+            </p>
+
+        </div>
+
+
+        {% endif %}
+
+
+
+        <!-- BACK BUTTON -->
+
+        <a href="{% url 'patient_dashboard' %}"
+           class="back-btn">
+
+            ← Back to Dashboard
+
+        </a>
+
+
+    </div>
+
+
+</div>
+
+
+</body>
+
+</html>
